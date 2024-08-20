@@ -127,3 +127,27 @@ CBTab:AddParagraph("About Invincibility...","Some Gloves Break With GodMode, the
 local CBSSection = CBTab:AddSection({
 	Name = "Free Ability Spam"
 })
+
+                CBTab:AddToggle({
+                    Name = "Rhythm's Explosion Spam",
+                    Default = false,
+                    Callback = function(Value)
+RhythmSpam = Value
+while RhythmSpam do
+game:GetService("ReplicatedStorage").rhythmevent:FireServer("AoeExplosion",0)
+task.wait()
+end
+                    end    
+                })
+
+                CBTab:AddToggle({
+                    Name = "Null's Ability Spam",
+                    Default = false,
+                    Callback = function(Value)
+NullSpam = Value
+while NullSpam do
+game:GetService("ReplicatedStorage").NullAbility:FireServer()
+task.wait()
+end
+                    end    
+                })
