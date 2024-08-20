@@ -163,3 +163,24 @@ task.wait()
 end
                     end    
                 })
+
+                CBTab:AddToggle({
+                    Name = "Retro Ability Spam",
+                    Default = false,
+                    Callback = function(Value)
+RetroSpam = Value
+while RetroSpam do
+game:GetService("ReplicatedStorage").RetroAbility:FireServer(RetroAbility)
+task.wait()
+end
+                    end    
+                })
+
+Tab2:AddDropdown({
+	Name = "Retro Ability Selection",
+	Default = "Rocket Launcher",
+	Options = {"Rocket Launcher", "Retro Hammer", "Bomb"},
+	Callback = function(Value)
+RetroAbility = Value
+	end    
+})
