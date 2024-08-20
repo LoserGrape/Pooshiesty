@@ -176,7 +176,7 @@ end
                     end    
                 })
 
-Tab2:AddDropdown({
+CBTab:AddDropdown({
 	Name = "Retro Ability Selection",
 	Default = "Rocket Launcher",
 	Options = {"Rocket Launcher", "Retro Hammer", "Bomb"},
