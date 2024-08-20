@@ -151,3 +151,15 @@ task.wait()
 end
                     end    
                 })
+
+                CBTab:AddToggle({
+                    Name = "Blasphemy Piano Spam",
+                    Default = false,
+                    Callback = function(Value)
+BPSpam = Value
+while BPSpam do
+game:GetService("ReplicatedStorage").Piano:FireServer()
+task.wait()
+end
+                    end    
+                })
