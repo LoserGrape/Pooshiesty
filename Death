@@ -250,3 +250,42 @@ workspace.AntiDefaultArena.CanTouch = true
 end
 	end    
 })
+
+ANTab:AddToggle({
+	Name = "Anti Null",
+	Default = false,
+	Callback = function(Value)
+_G.AntiNull = Value
+while _G.AntiNull do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                if v.Name == "Imp" and v:FindFirstChild("Body") then
+                       gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v.Body,true)
+                 end
+            end
+task.wait()
+end
+	end    
+})
+
+ANTab:AddToggle({
+	Name = "Anti Ragdoll",
+	Default = false,
+	Callback = function(Value)
+        _G.AntiRagdoll = Value
+while _G.AntiRagdoll do
+if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Torso") and game.Players.LocalPlayer.Character:FindFirstChild("Ragdolled") then
+if game.Players.LocalPlayer.Character:FindFirstChild("Ragdolled") and game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == true then
+repeat task.wait()
+if game.Players.LocalPlayer.Character:FindFirstChild("Torso") then
+game.Players.LocalPlayer.Character.Torso.Anchored = true
+end
+until game.Players.LocalPlayer.Character:FindFirstChild("Ragdolled") and game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
+if game.Players.LocalPlayer.Character:FindFirstChild("Torso") then
+game.Players.LocalPlayer.Character.Torso.Anchored = false
+end
+end
+end
+task.wait()
+end
+	end    
+})
