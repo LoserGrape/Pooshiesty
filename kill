@@ -1,4 +1,4 @@
-local function executeActions()
+local function executeActionsOnce()
     -- First action: Fire the ClickDetector
     fireclickdetector(workspace.Lobby.Frostbite.ClickDetector)
 
@@ -27,5 +27,5 @@ local function executeActions()
     game:GetService("ReplicatedStorage").RetroAbility:FireServer("Ban Hammer")
 end
 
--- Execute the function
-executeActions()
+-- Execute the function once
+executeActionsOnce()
