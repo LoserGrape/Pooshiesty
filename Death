@@ -1,6 +1,4 @@
-local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local function getNearestPlayer()
     local localPlayer = Players.LocalPlayer
@@ -28,28 +26,7 @@ if nearestPlayer then
     local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
 
     if humanoidRootPart then
-        local goal = {}
-        goal.Position = nearestPlayer.Character.HumanoidRootPart.Position
-
-        local tweenInfo = TweenInfo.new(
-            2, -- Time it takes to reach the target
-            Enum.EasingStyle.Linear, -- Easing style
-            Enum.EasingDirection.Out -- Easing direction
-        )
-
-        local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
-        
-        tween.Completed:Connect(function()
-            -- Fire the server with "Bomb" once the tween is complete
-            ReplicatedStorage.RetroAbility:FireServer("Bomb")
-            
-            -- Stop any additional movement or tweens
-            humanoidRootPart.Anchored = true
-            wait(0.1)
-            humanoidRootPart.Anchored = false
-        end)
-
-        tween:Play()
+        humanoidRootPart.CFrame = nearestPlayer.Character.HumanoidRootPart.CFrame
     else
         print("HumanoidRootPart not found.")
     end
