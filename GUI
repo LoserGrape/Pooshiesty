@@ -1,3 +1,289 @@
+
+-- Fake c00lgui Rc7 - CLEAN BASE VERSION
+-- Drop this LocalScript into StarterPlayer > StarterPlayerScripts
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+-- Create the GUI
+local gui = Instance.new("ScreenGui", PlayerGui)
+gui.Name = "Fake_c00lgui_Rc7"
+
+-- Main container frame
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 380, 0, 450)
+frame.Position = UDim2.new(0.35, 0, 0.3, 0)
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
+frame.BorderSizePixel = 2
+frame.Active = true
+frame.Draggable = true
+
+-- Title Bar
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Text = "c00lgui 0.2 by 007n7"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+title.BorderColor3 = Color3.fromRGB(255, 0, 0)
+title.Font = Enum.Font.Code
+title.TextSize = 20
+
+-- Close Button
+local close = Instance.new("TextButton", frame)
+close.Text = "Close"
+close.Size = UDim2.new(1, 0, 0, 30)
+close.Position = UDim2.new(0, 0, 1, -30)
+close.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+close.BorderColor3 = Color3.fromRGB(255, 0, 0)
+close.TextColor3 = Color3.fromRGB(255, 255, 255)
+close.Font = Enum.Font.Code
+close.TextSize = 18
+close.MouseButton1Click:Connect(function()
+gui:Destroy()
+end)
+
+-- Scroll Frame - Full customizable panel
+local scrollFrame = Instance.new("ScrollingFrame", frame)
+scrollFrame.Name = "MegaScroll"
+scrollFrame.Position = UDim2.new(0, 10, 0, 40) -- below title
+scrollFrame.Size = UDim2.new(1, -20, 1, -70)   -- above close button
+scrollFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+scrollFrame.BorderColor3 = Color3.fromRGB(255, 0, 0)
+scrollFrame.ScrollBarThickness = 6
+scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 800)
+scrollFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+scrollFrame.ClipsDescendants = true
+
+-- Layout for scroll contents
+local layout = Instance.new("UIListLayout", scrollFrame)
+layout.Padding = UDim.new(0, 5)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+-- 🔧 Button Helper Functions 🔧
+
+function AddScrollButton(buttonText, callback)
+local btn = Instance.new("TextButton")
+btn.Size = UDim2.new(1, 0, 0, 30)
+btn.Text = buttonText
+btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btn.BorderColor3 = Color3.fromRGB(255, 0, 0)
+btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+btn.Font = Enum.Font.Code
+btn.TextSize = 16
+btn.LayoutOrder = 0
+btn.Parent = scrollFrame
+btn.MouseButton1Click:Connect(callback)
+end
+
+function AddSectionLabel(text)
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, 0, 0, 25)
+label.Text = "» " .. text
+label.Font = Enum.Font.Code
+label.TextSize = 18
+label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+label.BorderColor3 = Color3.fromRGB(255, 0, 0)
+label.TextColor3 = Color3.fromRGB(255, 255, 255)
+label.Parent = scrollFrame
+end
+
+AddSectionLabel("[-Certified Cool-]")
+
+-- 🏃 Set Speed Section
+
+-- Container Frame
+local speedContainer = Instance.new("Frame")
+speedContainer.Size = UDim2.new(1, 0, 0, 35)
+speedContainer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+speedContainer.BorderColor3 = Color3.fromRGB(255, 0, 0)
+speedContainer.Parent = scrollFrame
+
+-- Label
+local speedLabel = Instance.new("TextLabel", speedContainer)
+speedLabel.Size = UDim2.new(0.3, 0, 1, 0)
+speedLabel.Position = UDim2.new(0, 0, 0, 0)
+speedLabel.Text = "Set Speed"
+speedLabel.Font = Enum.Font.Code
+speedLabel.TextSize = 16
+speedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+speedLabel.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+-- Input Box
+local speedInput = Instance.new("TextBox", speedContainer)
+speedInput.Size = UDim2.new(0.4, 0, 1, 0)
+speedInput.Position = UDim2.new(0.3, 0, 0, 0)
+speedInput.PlaceholderText = "16"
+speedInput.Text = ""
+speedInput.Font = Enum.Font.Code
+speedInput.TextSize = 16
+speedInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedInput.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+speedInput.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+-- Apply Button
+local speedSet = Instance.new("TextButton", speedContainer)
+speedSet.Size = UDim2.new(0.3, -5, 1, 0)
+speedSet.Position = UDim2.new(0.7, 5, 0, 0)
+speedSet.Text = "Apply"
+speedSet.Font = Enum.Font.Code
+speedSet.TextSize = 16
+speedSet.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedSet.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+speedSet.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+-- On Click: Set Speed
+speedSet.MouseButton1Click:Connect(function()
+local val = tonumber(speedInput.Text)
+if val and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+Player.Character.Humanoid.WalkSpeed = val
+end
+end)
+
+-- 🦘 Set Jump Power Section
+
+local jumpContainer = Instance.new("Frame")
+jumpContainer.Size = UDim2.new(1, 0, 0, 35)
+jumpContainer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+jumpContainer.BorderColor3 = Color3.fromRGB(255, 0, 0)
+jumpContainer.Parent = scrollFrame
+
+local jumpLabel = Instance.new("TextLabel", jumpContainer)
+jumpLabel.Size = UDim2.new(0.3, 0, 1, 0)
+jumpLabel.Position = UDim2.new(0, 0, 0, 0)
+jumpLabel.Text = "Set Jump"
+jumpLabel.Font = Enum.Font.Code
+jumpLabel.TextSize = 16
+jumpLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+jumpLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+jumpLabel.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+local jumpInput = Instance.new("TextBox", jumpContainer)
+jumpInput.Size = UDim2.new(0.4, 0, 1, 0)
+jumpInput.Position = UDim2.new(0.3, 0, 0, 0)
+jumpInput.PlaceholderText = "50"
+jumpInput.Text = ""
+jumpInput.Font = Enum.Font.Code
+jumpInput.TextSize = 16
+jumpInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+jumpInput.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+jumpInput.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+local jumpSet = Instance.new("TextButton", jumpContainer)
+jumpSet.Size = UDim2.new(0.3, -5, 1, 0)
+jumpSet.Position = UDim2.new(0.7, 5, 0, 0)
+jumpSet.Text = "Apply"
+jumpSet.Font = Enum.Font.Code
+jumpSet.TextSize = 16
+jumpSet.TextColor3 = Color3.fromRGB(255, 255, 255)
+jumpSet.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+jumpSet.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+jumpSet.MouseButton1Click:Connect(function()
+local val = tonumber(jumpInput.Text)
+if val and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+Player.Character.Humanoid.JumpPower = val
+end
+end)
+
+-- 🌌 Set Gravity Section
+
+local gravityContainer = Instance.new("Frame")
+gravityContainer.Size = UDim2.new(1, 0, 0, 35)
+gravityContainer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+gravityContainer.BorderColor3 = Color3.fromRGB(255, 0, 0)
+gravityContainer.Parent = scrollFrame
+
+local gravityLabel = Instance.new("TextLabel", gravityContainer)
+gravityLabel.Size = UDim2.new(0.3, 0, 1, 0)
+gravityLabel.Position = UDim2.new(0, 0, 0, 0)
+gravityLabel.Text = "[Set Gravity]"
+gravityLabel.Font = Enum.Font.Code
+gravityLabel.TextSize = 16
+gravityLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+gravityLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+gravityLabel.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+local gravityInput = Instance.new("TextBox", gravityContainer)
+gravityInput.Size = UDim2.new(0.4, 0, 1, 0)
+gravityInput.Position = UDim2.new(0.3, 0, 0, 0)
+gravityInput.PlaceholderText = "196.2"
+gravityInput.Text = ""
+gravityInput.Font = Enum.Font.Code
+gravityInput.TextSize = 16
+gravityInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+gravityInput.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+gravityInput.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+local gravitySet = Instance.new("TextButton", gravityContainer)
+gravitySet.Size = UDim2.new(0.3, -5, 1, 0)
+gravitySet.Position = UDim2.new(0.7, 5, 0, 0)
+gravitySet.Text = "Apply"
+gravitySet.Font = Enum.Font.Code
+gravitySet.TextSize = 16
+gravitySet.TextColor3 = Color3.fromRGB(255, 255, 255)
+gravitySet.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+gravitySet.BorderColor3 = Color3.fromRGB(255, 0, 0)
+
+gravitySet.MouseButton1Click:Connect(function()
+local val = tonumber(gravityInput.Text)
+if val then
+workspace.Gravity = val
+end
+end)
+
+AddScrollButton("[No Fall Damage]", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Natural-Disaster-Survival-No-fall-damage-36260"))()
+end)
+
+AddScrollButton("Fly [Toggle]", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    local hum = char:WaitForChild("Humanoid")
+    local cam = workspace.CurrentCamera
+    local RunService = game:GetService("RunService")
+
+    local state = gui:FindFirstChild("FlyToggleState")
+    if not state then
+        state = Instance.new("BoolValue", gui)
+        state.Name = "FlyToggleState"
+        state.Value = false
+    end
+    state.Value = not state.Value
+
+    -- Clean up old bodies
+    if gui:FindFirstChild("FlyBV") then gui.FlyBV:Destroy() end
+    if gui:FindFirstChild("FlyBG") then gui.FlyBG:Destroy() end
+
+    if state.Value then
+        hum.PlatformStand = true
+
+        local bv = Instance.new("BodyVelocity", hrp)
+        bv.Name = "FlyBV"
+        bv.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+        bv.Velocity = Vector3.zero
+
+        local bg = Instance.new("BodyGyro", hrp)
+        bg.Name = "FlyBG"
+        bg.MaxTorque = Vector3.new(1e5, 1e5, 1e5)
+        bg.CFrame = hrp.CFrame
+
+        local conn
+        conn = RunService.RenderStepped:Connect(function()
+            if not state.Value then conn:Disconnect() return end
+            local camCF = cam.CFrame
+            -- **Correct direction conversion**
+            local dir = camCF:VectorToWorldSpace(hum.MoveDirection)
+            bv.Velocity = dir * 60
+            bg.CFrame = CFrame.new(hrp.Position, hrp.Position + camCF.LookVector)
+        end)
+    else
+        hum.PlatformStand = false
+    end
+end)
+
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local LocalPlayer = Players.LocalPlayer
