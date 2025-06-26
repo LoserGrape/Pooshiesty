@@ -1,0 +1,72 @@
+local Players = game:GetService("Players")
+local Lighting = game:GetService("Lighting")
+local LocalPlayer = Players.LocalPlayer
+
+-- Settings
+local TARGET_USERNAME = "1DarkRevenant"
+local TRIGGER_WORD = "!Sky"
+
+-- Function to hide everyone except self and the target player
+local function hideOthers()
+	for _, player in pairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer and player.Name ~= TARGET_USERNAME then
+			local character = player.Character
+			if character then
+				for _, part in ipairs(character:GetDescendants()) do
+					if part:IsA("BasePart") or part:IsA("Decal") or part:IsA("Texture") then
+						part.Transparency = 1
+						if part:IsA("BasePart") then
+							part.CanCollide = false
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+-- Function to kill fog and change sky
+local function applySkyChanges()
+	-- Kill the fog
+	Lighting.FogStart = 1000000
+	Lighting.FogEnd = 1000001
+	Lighting.FogColor = Color3.fromRGB(255, 255, 255)
+
+	-- Remove existing sky
+	local existingSky = Lighting:FindFirstChildOfClass("Sky")
+	if existingSky then
+		existingSky:Destroy()
+	end
+
+	-- Create new sky
+	local sky = Instance.new("Sky")
+	sky.Name = "CoolSky"
+	local skyId = "rbxassetid://158118263"
+	sky.SkyboxBk = skyId
+	sky.SkyboxDn = skyId
+	sky.SkyboxFt = skyId
+	sky.SkyboxLf = skyId
+	sky.SkyboxRt = skyId
+	sky.SkyboxUp = skyId
+	sky.Parent = Lighting
+end
+
+-- Listen to all players' chats (using .Chatted only works on local player + nearby)
+Players.PlayerAdded:Connect(function(player)
+	player.Chatted:Connect(function(msg)
+		if player.Name == TARGET_USERNAME and msg:lower() == TRIGGER_WORD:lower() then
+			hideOthers()
+			applySkyChanges()
+		end
+	end)
+end)
+
+-- For players already in-game (like if DarkRevenant was in-game when the script started)
+for _, player in pairs(Players:GetPlayers()) do
+	player.Chatted:Connect(function(msg)
+		if player.Name == TARGET_USERNAME and msg:lower() == TRIGGER_WORD:lower() then
+			hideOthers()
+			applySkyChanges()
+		end
+	end)
+end
